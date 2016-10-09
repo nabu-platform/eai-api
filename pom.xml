@@ -5,8 +5,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>be.nabu.eai</groupId>
 	<artifactId>eai-api</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>${be.nabu.eai-eai-api-version}</version>
 	<name>eai-api</name>
+
+	<parent>
+		<groupId>be.nabu</groupId>
+		<artifactId>core</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
 
 	<build>
 		<plugins>
@@ -25,7 +31,6 @@
 		<dependency>
 			<groupId>be.nabu.libs.authentication</groupId>
 			<artifactId>authentication-api</artifactId>
-			<version>1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
