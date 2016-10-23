@@ -8,5 +8,5 @@ import be.nabu.libs.authentication.api.TokenWithSecret;
 import be.nabu.libs.authentication.api.principals.BasicPrincipal;
 
 public interface PasswordAuthenticator {
-	public TokenWithSecret authenticate(@NotNull @WebParam(name = "realm") String realm, @NotNull @WebParam(name = "credentials") BasicPrincipal credential, @NotNull @WebParam(name = "device") Device device);
+	public TokenWithSecret authenticate(@NotNull @WebParam(name = "realm") String realm, @NotNull @WebParam(name = "credentials") BasicPrincipal credential, @WebParam(name = "device") Device device);
 }
