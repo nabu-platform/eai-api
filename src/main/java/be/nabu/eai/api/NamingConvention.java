@@ -3,11 +3,13 @@ package be.nabu.eai.api;
 import java.util.function.Function;
 
 public enum NamingConvention {
-	UPPER_CAMEL_CASE(new Camelifier(true)),
-	LOWER_CAMEL_CASE(new Camelifier(false)),
+	UPPER_CAMEL_CASE(new Camelifier(true, false)),
+	LOWER_CAMEL_CASE(new Camelifier(false, false)),
 	UNDERSCORE(new Decamelifier("_")),
 	DASH(new Decamelifier("-")),
-	LOWER_CASE(new Decamelifier(null))
+	LOWER_CASE(new Decamelifier(null)),
+	UPPER_TEXT(new Camelifier(true, true)),
+	LOWER_TEXT(new Camelifier(false, true))
 	;
 	
 	private Function<String, String> transformer;
@@ -21,6 +23,12 @@ public enum NamingConvention {
 	}
 	
 	public String apply(String originalString, NamingConvention originalConvention) {
+		if (this == UPPER_TEXT || this == LOWER_TEXT) {
+			// if we have to go from camel cased to text, round trip to dashed
+			if (originalConvention == LOWER_CAMEL_CASE || originalConvention == UPPER_CAMEL_CASE) {
+				originalString = DASH.transformer.apply(originalString);
+			}
+		}
 		// we always roundtrip to camelcase
 		if (originalConvention != LOWER_CAMEL_CASE && originalConvention != UPPER_CAMEL_CASE) {
 			originalString = LOWER_CAMEL_CASE.transformer.apply(originalString);
@@ -57,10 +65,11 @@ public enum NamingConvention {
 	}
 	
 	public static class Camelifier implements Function<String, String> {
-		private boolean upperCase;
+		private boolean upperCase, useWords;
 		
-		public Camelifier(boolean upperCase) {
+		public Camelifier(boolean upperCase, boolean useWords) {
 			this.upperCase = upperCase;
+			this.useWords = useWords;
 		}
 		
 		@Override
@@ -69,7 +78,10 @@ public enum NamingConvention {
 			String[] split = t.split("[^a-zA-Z0-9]+");
 			for (int i = 0; i < split.length; i++) {
 				if (!split[i].isEmpty()) {
-					if (i > 0 || upperCase) {
+					if (i > 0 && useWords) {
+						builder.append(" ");
+					}
+					if ((i > 0 && !useWords) || upperCase) {
 						builder.append(split[i].substring(0, 1).toUpperCase() + split[i].substring(1));
 					}
 					else {
