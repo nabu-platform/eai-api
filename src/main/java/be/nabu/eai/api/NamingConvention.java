@@ -29,8 +29,13 @@ public enum NamingConvention {
 				originalString = DASH.transformer.apply(originalString);
 			}
 		}
-		// we always roundtrip to camelcase
-		if (originalConvention != LOWER_CAMEL_CASE && originalConvention != UPPER_CAMEL_CASE) {
+		// if we are moving from one camelcase to another, roundtrip to dashed
+		if ((originalConvention == LOWER_CAMEL_CASE || originalConvention == UPPER_CAMEL_CASE)
+				&& (this == LOWER_CAMEL_CASE || this == UPPER_CAMEL_CASE)) {
+			originalString = DASH.apply(originalString);
+		}
+		// otherwise we always roundtrip to camelcase
+		else if (originalConvention != LOWER_CAMEL_CASE && originalConvention != UPPER_CAMEL_CASE) {
 			originalString = LOWER_CAMEL_CASE.transformer.apply(originalString);
 		}
 		return this.transformer.apply(originalString);
@@ -89,7 +94,11 @@ public enum NamingConvention {
 					}
 				}
 			}
-			return builder.toString();
+			String string = builder.toString();
+			if (!upperCase && !string.isEmpty()) {
+				string = string.substring(0, 1).toLowerCase() + string.substring(1);
+			}
+			return string;
 		}
 	};
 }
