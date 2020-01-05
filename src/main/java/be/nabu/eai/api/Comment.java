@@ -10,4 +10,5 @@ import java.lang.annotation.Target;
 public @interface Comment {
 	public String title();
 	public String description() default "";
+	public String code() default "";
 }
