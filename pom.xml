@@ -29,6 +29,10 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>be.nabu.libs.artifacts</groupId>
+			<artifactId>artifacts-api</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>be.nabu.libs.authentication</groupId>
 			<artifactId>authentication-api</artifactId>
 		</dependency>
