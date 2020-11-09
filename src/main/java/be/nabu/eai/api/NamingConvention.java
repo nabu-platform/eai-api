@@ -58,7 +58,7 @@ public enum NamingConvention {
 				}
 				else {
 					// if it is not preceded by the sequence or another capitilized
-					if (sequence != null && !string.endsWith(sequence) && !previousUpper) {
+					if (sequence != null && !builder.toString().endsWith(sequence) && !previousUpper) {
 						builder.append(sequence);
 					}
 					previousUpper = true;
