@@ -40,5 +40,9 @@
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>be.nabu.libs.services</groupId>
+			<artifactId>services-api</artifactId>
+		</dependency>
 	</dependencies>
 </project>
