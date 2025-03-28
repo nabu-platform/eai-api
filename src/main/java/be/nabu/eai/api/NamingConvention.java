@@ -19,6 +19,8 @@ package be.nabu.eai.api;
 
 import java.util.function.Function;
 
+// moved to artifacts-api for broader reuse
+@Deprecated
 public enum NamingConvention {
 	UPPER_CAMEL_CASE(new Camelifier(true, false)),
 	LOWER_CAMEL_CASE(new Camelifier(false, false)),
